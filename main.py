@@ -1,14 +1,15 @@
+# from spotify_to_yt import Conversor
 
-# from spotify_to_yt import Spotify_api_handler
+# conversor = Conversor("oauth.json", "https://open.spotify.com/playlist/0qfKUajJMUNelvbKGSJLls")
+# print(conversor.create_ytbmusic_playlist())
 
+# from spotify_to_yt.spotify_api import Spotify_api_handler
 
-# conversor = Spotify_api_handler()
-# print(conversor.get_tracks_from_playlist("5GCn30YVUUxWolZb89iSra"))
+# x = Spotify_api_handler()
+# print(x.get_tracks_from_playlist("0qfKUajJMUNelvbKGSJLls"))
 
-#from ytmusicapi import YTMusic
-#ytmusic = YTMusic("oauth.json")
+from spotify_to_yt import YTBAuth
 
-from spotify_to_yt import Conversor
+x = YTBAuth(2,3,4,5,6)
 
-conversor = Conversor("oauth.json", "https://open.spotify.com/playlist/7exi5sHBn7DGH1S1kECOat?si=IkFmfhvvTceATX6O-aJtLA")
-print(conversor.create_ytbmusic_playlist())
+print(x.create_oauth_json())

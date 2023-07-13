@@ -1,2 +1,3 @@
 from spotify_to_yt.spotify_api import Spotify_api_handler
 from spotify_to_yt.conversor import Conversor
+from spotify_to_yt.auth import YTBAuth

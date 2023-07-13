@@ -34,16 +34,28 @@ class Conversor():
     async def _load_spotify(self):
         return Spotify_api_handler()
     
+    def _change_playlist_privacy_status(self, playlist_id):
+        self.ytmusic.edit_playlist(playlistId=playlist_id,privacyStatus="PUBLIC")
+    
     def _convert_playlist(self):
         playlist_id = self.ytmusic.create_playlist(self.playlist_name, "Playlist converted from Online Conversor.")
         for i in range(len(self.tracks)):
+            print(self.tracks[i])
             track_name = self.tracks[i]["track_name"]
             artists = ""
-            for item in self.tracks[i]["artists"]:
-                artists += item + " "
-            search_results = self.ytmusic.search(f"{track_name} {artists}")
-            self.ytmusic.add_playlist_items(playlist_id, [search_results[0]['videoId']])
+            item =0
+            for item in range(len(self.tracks[i]["artists"])):
+                print(self.tracks[i])
+                artists += self.tracks[i]["artists"][item] + " "
+            try:
+                search_results = self.ytmusic.search(f"{track_name} {artists}")
+                self.ytmusic.add_playlist_items(playlist_id, [search_results[0]['videoId']])
+            except:
+                print(f"Could not find {track_name} {artists}")
+        self._change_playlist_privacy_status(playlist_id)
         return playlist_id
+    
+    
     
     def create_ytbmusic_playlist(self):
         return f'https://music.youtube.com/playlist?list={self._convert_playlist()}'

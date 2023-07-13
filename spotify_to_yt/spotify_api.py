@@ -47,11 +47,8 @@ class Spotify_api_handler():
             return data
         else:
             raise Exception(response.content)
-        
-
-    def get_tracks_from_playlist(self, playlist_link):
-        playlist = self._get_playlist_items(playlist_link)
-        items = playlist["items"]
+    
+    def _arrange_tracks(self, items):
         songs = []
         artists = []
         for song in range(len(items)):
@@ -65,7 +62,6 @@ class Spotify_api_handler():
                 for x in range(len(inside_artists)):
                     art.append(inside_artists[x]["name"])
                 artists.append(art)
-                
         tracks = []
         
         for j in range(len(songs)):
@@ -73,6 +69,28 @@ class Spotify_api_handler():
             tracks.append(track)
             
         return tracks
+    
+    def _create_song_artist_dict(self, songs, artists):
+        playlist = []
+        for song, artist_list in zip(songs, artists):
+            artist_names = [artist['name'] for artist in artist_list]
+            playlist.append({'track_name': song, 'artists': artist_names})
+        return playlist
+
+    def get_tracks_from_playlist(self, playlist_link):
+        playlist = self._get_playlist_items(playlist_link)
+        items = playlist["items"]
+        
+        songs = []
+        artists = []
+        for song in range(len(items)):
+            songs.append(items[song]["track"]["name"])
+            
+        for artist in range(len(items)):
+            inside_artists = items[artist]["track"]["artists"]
+            artists.append(inside_artists)
+        
+        return self._create_song_artist_dict(songs, artists)
 
     def get_playlist_name(self, playlist_link):
         playlist = self._get_playlist(playlist_link)
