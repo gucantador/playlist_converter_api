@@ -11,6 +11,7 @@ class YTBAuth():
         self.refresh_token = refresh_token
         self.expires_at = expires_at
         self.path = self._get_path()
+        self.file_name = None
     
     def create_oauth_json(self):
         data = {
@@ -23,6 +24,7 @@ class YTBAuth():
         }
         
         file_name = f"{self.user_id}_oauth.json"
+        self.file_name = file_name
         file_path = os.path.join(self.path, file_name)
         
         with open(file_path, "w") as file:

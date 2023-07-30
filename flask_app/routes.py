@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from spotify_to_yt import Conversor
+from spotify_to_yt import Conversor, YTBAuth
 from flask_app import app
 import asyncio
 import nest_asyncio
@@ -25,4 +25,14 @@ async def conversion_task(link):
     return playlist_link
 
 
-  
+@app.route('/ytb_auth', methods=['POST'])
+def ytb_auth():
+      auth_data = request.get_json()
+      if auth_data:
+        auth = YTBAuth(user_id=auth_data['user_id'], access_token=auth_data['access_token'], 
+                        expires_in=auth_data['expires_in'], refresh_token=auth_data['refresh_token'], 
+                        expires_at=auth_data['expires_at'])
+        auth.create_oauth_json()
+        return jsonify(file_name=auth.file_name), 200
+      return jsonify(error='lack_of_data'), 400 
+      
