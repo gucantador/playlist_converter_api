@@ -2,6 +2,7 @@ from ytmusicapi import YTMusic
 import re
 from spotify_to_yt.spotify_api import Spotify_api_handler
 import asyncio
+import json
 
 class Conversor():
     
@@ -54,8 +55,7 @@ class Conversor():
                 print(f"Could not find {track_name} {artists}")
         self._change_playlist_privacy_status(playlist_id)
         return playlist_id
-    
-    
-    
+        
     def create_ytbmusic_playlist(self):
         return f'https://music.youtube.com/playlist?list={self._convert_playlist()}'
+    

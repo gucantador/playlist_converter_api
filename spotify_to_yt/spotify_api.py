@@ -1,11 +1,13 @@
 import requests
-from spotify_to_yt.constants import CLIENT_ID, CLIENT_SECRET
+#from spotify_to_yt.constants import CLIENT_ID, CLIENT_SECRET
+import os
+
 
 class Spotify_api_handler():
     
     def __init__(self):
-        self.client_id = CLIENT_ID
-        self.client_secret = CLIENT_SECRET
+        self.client_id = os.environ.get("CLIENT_ID")
+        self.client_secret = os.environ.get("CLIENT_SECRET")
         self.access_token = self._get_spotify_access_token()
 
     def _get_spotify_access_token(self):

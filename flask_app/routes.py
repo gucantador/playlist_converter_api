@@ -10,15 +10,22 @@ nest_asyncio.apply()
 def convert_to_ytb_from_spt():
     convert = request.get_json()
     link = convert["playlist_link"]
-    if link:
-        youtube_music_link = asyncio.run(conversion_task(link))
-        print(youtube_music_link)
-        return jsonify(ytb_music_link=youtube_music_link), 200
-    return jsonify(error="Empty link")
+    auth = convert['auth']
+
+    #  TODO add checking if the auth exists
+    if not link:
+        return jsonify(error='Empty link'), 400
+    if not auth:
+        return jsonify(error='No auth'), 400
+    youtube_music_link = asyncio.run(conversion_task(auth, link))
+    time.sleep(10)
+    #  TODO find a way to remove the auth 
+    return jsonify(ytb_music_link=youtube_music_link), 200
+    
 
 
-async def conversion_task(link):
-    conversor = Conversor("oauth.json", link)
+async def conversion_task(auth, link):
+    conversor = Conversor(auth, link)
 
     playlist_link = conversor.create_ytbmusic_playlist()
     time.sleep(10)
