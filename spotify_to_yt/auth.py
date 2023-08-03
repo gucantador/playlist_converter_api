@@ -32,10 +32,7 @@ class YTBAuth():
             
     def _get_path(self):
         absolute_path = os.path.abspath(__file__)
-        substring_to_remove_windows = r"spotify_to_yt\auth.py"
         substring_to_remove_linux = r"spotify_to_yt/auth.py"
-        try:
-            path = re.sub(rf"\\?{re.escape(substring_to_remove_windows)}$", "", absolute_path)
-        except:
-            path = re.sub(rf"\\?{re.escape(substring_to_remove_linux)}$", "", absolute_path)
+        path = re.sub(rf"\\?{re.escape(substring_to_remove_linux)}$", "", absolute_path)          
+            
         return path
